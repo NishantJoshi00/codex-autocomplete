@@ -8,7 +8,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - Initial Release of the exten
 
-### 1.0.0
+### Release: 1.0.0
 
 ```json
 {
@@ -21,3 +21,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
     
 }
 ```
+
+#### Release: 1.01
+- README improvements, changelog added
