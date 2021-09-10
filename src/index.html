@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Coding</title>
+    <style>
+        table {
+            padding: 1em;
+        }
+        td {
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Settings</h1>
+    <table style="border: 1px solid black;">
+        <tr>
+            <th>
+                <h2>Settings</h2>
+            </th>
+            <th>
+                <h2>
+                    Values
+                </h2>
+            </th>
+        </tr>
+        <tr>
+            <td><h2>temperature: </h2></td>
+            <td><h2>${context.workspaceState.get('@codex.temperature', 0)}</h2></td>
+        </tr>
+        <tr>
+            <td><h2>max_tokens: </h2></td>
+            <td><h2>${context.workspaceState.get('@codex.max_tokens', 128)}</h2></td>
+        </tr>
+        <tr>
+            <td><h2>top_p: </h2></td>
+            <td><h2>${context.workspaceState.get('@codex.top_p', 1)}</h2></td>
+        </tr>
+        <tr>
+            <td><h2>frequency_penalty: </h2></td>
+            <td><h2>${context.workspaceState.get('@codex.frequency_penalty', 0)}</h2></td>
+        </tr>
+        <tr>
+            <td><h2>presence_penalty: </h2></td>
+            <td><h2>${context.workspaceState.get('@codex.presence_penalty', 0)}</h2></td>
+        </tr>
+    </table>
+</body>
+</html>
