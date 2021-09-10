@@ -1,12 +1,12 @@
 {
-  "name": "codex",
+  	"name": "codex",
 	"displayName": "codex-autocomplete",
 	"description": "This is a openAI codex assisted auto complete for various programming languages",
 	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
-	"icon": "https://raw.githubusercontent.com/NishantJoshi00/codex-autocomplete/main/codex-neon.png",
+	"icon": "codex-neon.png",
 	"categories": [
 		"Other"
 	],
@@ -66,5 +66,7 @@
 		"ts-loader": "^9.2.2",
 		"webpack": "^5.38.1",
 		"webpack-cli": "^4.7.0"
-	}
+	},
+	"publisher": "joshinishant",
+	"repository": { "type": "github", "url": "https://github.com/NishantJoshi00/codex-autocomplete"}
 }
