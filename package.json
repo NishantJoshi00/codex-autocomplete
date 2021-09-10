@@ -6,7 +6,7 @@
 	"engines": {
 		"vscode": "^1.60.0"
 	},
-	"icon": "codex-neon.png",
+	"icon": "https://raw.githubusercontent.com/NishantJoshi00/codex-autocomplete/main/codex-neon.png",
 	"categories": [
 		"Other"
 	],
