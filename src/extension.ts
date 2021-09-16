@@ -3,9 +3,7 @@
 import * as vscode from 'vscode';
 import { request } from 'https';
 import { TextEncoder } from 'util';
-import { resolve } from 'path';
-import { rejects } from 'assert';
-import { open } from 'fs';
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -376,7 +374,7 @@ export function activate(context: vscode.ExtensionContext) {
 				res.on('data', (data: any) => {
 					const recievedData = JSON.parse(data);
 					editor.edit(edit => { 
-						let startBuf: string, endBuf: string;
+
 						edit.insert(eof, recievedData.choices[0].text);
 					});
 

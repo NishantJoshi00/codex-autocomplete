@@ -24,3 +24,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 #### Release: 1.01
 - README improvements, changelog added
+
+#### Release: 1.10
+- Some known issues added, improved key verification
