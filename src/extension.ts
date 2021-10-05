@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let startSession = vscode.commands.registerCommand('codex.startSession', async () => {
 		activated = true;
 		let apiKey = context.workspaceState.get('@codex.key', '');
-		console.log(apiKey);
+		// console.log(apiKey);
 		if (!apiKey || !context.workspaceState.get('@key.verified', true)) {
 			let key = await vscode.window.showInputBox({
 				password: true,
