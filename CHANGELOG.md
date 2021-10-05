@@ -27,3 +27,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 #### Release: 1.10
 - Some known issues added, improved key verification
+
+#### Release 1.20
+- How to added in the README.

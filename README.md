@@ -1,14 +1,27 @@
 # codex README
 This is an extension that incorporates the openAI's Codex API. By providing the code editor with the API_KEY of openAI Codex you can directly use it within your code files to generate code automatically.
 
+## Requirements
+
+- You are required to have a Codex API key in your possession. 
+
+
+
+## How-to-use
+As given in the requirements we need a Codex API key for this extension to work. If you have it already we are all ready to go.
+1. You will be required to enter the API key only when you open a VSCode instance after boot, or after installing the extension.
+2. To enter the API key, open Command Palette by `ctrl+shift+p` for windows, linux and `cmd+shift+p` for mac
+3. Try finding start session command which might look like `Codex: start session` and press `Enter`. You would be asked to enter your API key here, don't worry it is recieved in hidden star format, so you can just copy and paste it in front of other people.
+4. And even if you forget to start a session and went on to the next command, it verifies if you have added a key before generating any code.
+5. Now, you want to use this extension to generate some code right, let's do that.
+6. As this is an AI it cannot read your mind, write some code prior to asking it to generate some code, you can write comments, and some code of your own, just to let the AI understand the objective and the programming language.
+7. After that go to command palette, and find something that looks like this `Codex: Generate Code Completion`, and press `Enter`. The extension will run for a while, so hang on. It will check if the key is correct, it will request the codex API to generate the code that you want, and write it in the current opened document.
+
+
 ## Features
 
 - This is just an abstraction to the underlying Codex API that was implemented by openAI
 - [openai-codex](https://openai.com/blog/openai-codex/) <- Check the following link to understand the specification.
-
-## Requirements
-
-- You are required to have a Codex API key in your possession. 
 
 
 ## Known Issues
@@ -29,9 +42,9 @@ This is an extension that incorporates the openAI's Codex API. By providing the 
 
 ## Release Notes
 
-- Improved Error Messages
+- Improved README
 
-### 1.1.0
+### 1.2.0
 
 ```json
 {
@@ -42,7 +55,7 @@ This is an extension that incorporates the openAI's Codex API. By providing the 
     // (Can be changed through settings)
     "token_generation": 128,
     "bug fixes": "README.md, main_code",
-    "fixes": "Improved key verification & Error Understanding"
+    "fixes": "Improved documentation"
     
 }
 ```
