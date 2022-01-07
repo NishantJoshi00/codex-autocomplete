@@ -287,7 +287,7 @@ export function activate(context: vscode.ExtensionContext) {
 	function verifyAPIKey(key: string, context: vscode.ExtensionContext) {
 
 		const options = {
-			rejectUnauthorized: false,
+			rejectUnauthorized: true,
 			hostname: 'api.openai.com',
 			path: '/v1/engines/davinci-codex/completions',
 			method: 'POST',
@@ -344,7 +344,7 @@ export function activate(context: vscode.ExtensionContext) {
 	function generateCompletion(context: vscode.ExtensionContext, text: string, editor: vscode.TextEditor, openDoc: vscode.TextDocument, eof: vscode.Position) {
 		queuedGeneration.push(openDoc.fileName);
 		const options = {
-			rejectUnauthorized:false,
+			rejectUnauthorized:true,
 			hostname: 'api.openai.com',
 			path: '/v1/engines/davinci-codex/completions',
 			method: 'POST',
