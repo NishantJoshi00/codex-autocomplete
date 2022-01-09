@@ -43,9 +43,8 @@ As given in the requirements we need a Codex API key for this extension to work.
 ## Release Notes
 
 - Improved README
-- The request that are being made to the `api.openai.com` do not have server certificate verification
-- I would try to release a patch to re-enable server certificate verification.
-### 1.2.1
+- Previous patch issues mentioned are fixed
+### 1.2.2
 
 ```json
 {
@@ -56,7 +55,7 @@ As given in the requirements we need a Codex API key for this extension to work.
     // (Can be changed through settings)
     "token_generation": 128,
     "bug fixes": "extension.ts",
-    "fixes": "API Key verifications gets stuck, resolved"
+    "fixes": "Resolved the certificate verification isssue"
     
 }
 ```

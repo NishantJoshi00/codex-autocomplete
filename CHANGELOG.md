@@ -30,3 +30,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 #### Release 1.20
 - How to added in the README.
+
+#### Release 1.21
+- API verification gets stuck, due to the error while certificate verification, temporarily resolved.
