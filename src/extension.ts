@@ -7,6 +7,7 @@ import { TextEncoder } from 'util';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	let rejectUnauthorized: boolean = false;
 	let activated: boolean = false;
 	let queuedGeneration: string[] = [];
 	let queueLock: boolean = false;
@@ -287,7 +288,7 @@ export function activate(context: vscode.ExtensionContext) {
 	function verifyAPIKey(key: string, context: vscode.ExtensionContext) {
 
 		const options = {
-			rejectUnauthorized: true,
+			rejectUnauthorized: rejectUnauthorized,
 			hostname: 'api.openai.com',
 			path: '/v1/engines/davinci-codex/completions',
 			method: 'POST',
@@ -344,7 +345,7 @@ export function activate(context: vscode.ExtensionContext) {
 	function generateCompletion(context: vscode.ExtensionContext, text: string, editor: vscode.TextEditor, openDoc: vscode.TextDocument, eof: vscode.Position) {
 		queuedGeneration.push(openDoc.fileName);
 		const options = {
-			rejectUnauthorized:true,
+			rejectUnauthorized: rejectUnauthorized,
 			hostname: 'api.openai.com',
 			path: '/v1/engines/davinci-codex/completions',
 			method: 'POST',
@@ -374,6 +375,8 @@ export function activate(context: vscode.ExtensionContext) {
 					return;
 				}
 				res.on('data', (data: any) => {
+					console.log("Recieved Data: ");
+
 					const recievedData = JSON.parse(data);
 					editor.edit(edit => { 
 
@@ -406,7 +409,7 @@ export function activate(context: vscode.ExtensionContext) {
 					progress.report({ increment: 5 });
 				}, i* 500);
 			}
-
+			console.log("Making Request!");
 			await httpsRequest(options, data, handler);
 			progress.report({increment: 100, message: "Code recieved successfully"});
 			const filename = openDoc.uri.path.split('/').pop();

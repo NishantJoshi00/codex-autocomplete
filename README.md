@@ -44,7 +44,7 @@ As given in the requirements we need a Codex API key for this extension to work.
 
 - Improved README
 - Previous patch issues mentioned are fixed
-### 1.2.2
+### 1.2.3
 
 ```json
 {
