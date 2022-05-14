@@ -13,10 +13,23 @@ export function activate(context: vscode.ExtensionContext) {
 	let queueLock: boolean = false;
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "codex" is now active!');
+	// console.log('Congratulations, your extension "codex" is now active!');
 	
 	let startSession = vscode.commands.registerCommand('codex.startSession', async () => {
 		activated = true;
+		context.workspaceState.update('@codex.model', '/v1/engines/davinci-codex/completions');
+		let model = await vscode.window.showInputBox({
+			placeHolder: '/v1/engines/davinci-codex/completions',
+			prompt: 'Enter the model to use for the codex session',
+			title: 'Codex Model',
+		});
+		if (model === undefined) {
+			console.log(context.workspaceState.get('@codex.model', ''));
+		} else {
+			// console.log("Bood: ", model);
+			context.workspaceState.update('@codex.model', model);
+
+		}
 		let apiKey = context.workspaceState.get('@codex.key', '');
 		// console.log(apiKey);
 		if (!apiKey || !context.workspaceState.get('@key.verified', true)) {
@@ -27,6 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
 			});
 			if (key === undefined) {
 				vscode.window.showErrorMessage("The key entered is empty or invalid, please try again..");
+				activated = false;
 				return;
 			} else {
 				context.workspaceState.update('@codex.key', key);
@@ -38,7 +52,8 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(startSession);
 
 	let generateAutoComplete = vscode.commands.registerCommand('codex.generateAutoComplete', async () => {
-		
+		// console.log("Hello World! started working!");
+
 		if (!activated) {
 			vscode.window.showErrorMessage("The session is not activated");
 			await vscode.commands.executeCommand('codex.startSession');
@@ -58,8 +73,17 @@ export function activate(context: vscode.ExtensionContext) {
 				queueLock = false;
 			}
 			
-			const fileContent = openDoc.getText();
-			generateCompletion(context, fileContent, editor, openDoc, new vscode.Position(openDoc.lineCount - 1, openDoc.lineAt(openDoc.lineCount - 1).range.end.character));
+			// get the selected text from the openDoc
+			const selection = editor.selection;
+			const selectedText = openDoc.getText(selection);
+			console.log(selectedText);
+			// console.log(selectedText.length);
+			if (selectedText.length === 0) {
+				const fileContent = openDoc.getText();
+				generateCompletion(context, fileContent, editor, openDoc, new vscode.Position(openDoc.lineCount - 1, openDoc.lineAt(openDoc.lineCount - 1).range.end.character));
+			} else {
+				generateCompletion(context, selectedText, editor, openDoc, selection.end);
+			}
 			
 			
 		} else {
@@ -88,7 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let changeSettings = vscode.commands.registerCommand('codex.changeSettings', async () => {
 		const selected = await vscode.window.showQuickPick([
-			'temperature', 'max_tokens', 'top_p', 'frequency_penalty', 'presence_penalty'
+			'temperature', 'max_tokens', 'top_p', 'frequency_penalty', 'presence_penalty', 'model'
 		], {
 			canPickMany: false,
 			title: 'Change Parameters'
@@ -125,16 +149,22 @@ export function activate(context: vscode.ExtensionContext) {
 				placeHolder: '0',
 				prompt: 'increase likelihood of creativity',
 			};
+		} else if (selected === 'model') {
+			options = {
+				title: 'Model',
+				placeHolder: '/v1/engines/davinci-codex/completions',
+				prompt: 'Change the model',
+			};
 		}
 
-		options.validateInput = (userIn: string): any => {
-			if (!parseFloat(userIn)) {
-				return 'The input must be a number';
-			}
-			return null;
-			
-		};
-
+		if (selected !== 'model') {
+			options.validateInput = (userIn: string): any => {
+				if (!parseFloat(userIn)) {
+					return 'The input must be a number';
+				}
+				return null;		
+			};
+		}
 		const value = await vscode.window.showInputBox(options);
 		if (value === undefined) {
 			return;
@@ -188,6 +218,8 @@ export function activate(context: vscode.ExtensionContext) {
 				
 				}
 			}
+		} else if (selected === 'model') {
+			context.workspaceState.update("@codex.model", value);
 		}
 	});
 	context.subscriptions.push(changeSettings);
@@ -261,6 +293,9 @@ export function activate(context: vscode.ExtensionContext) {
 							<td><h2>presence_penalty: </h2></td>
 							<td><h2>${context.workspaceState.get('@codex.presence_penalty', 0)}</h2></td>
 						</tr>
+						<tr>
+							<td><h2>model: </h2></td>
+							<td><h2>${context.workspaceState.get('@codex.model', 'en')}</h2></td>
 					</table>
 				</body>
 				</html>`;
@@ -290,7 +325,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const options = {
 			rejectUnauthorized: rejectUnauthorized,
 			hostname: 'api.openai.com',
-			path: '/v1/engines/davinci-codex/completions',
+			path: `${context.workspaceState.get('@codex.model', '/v1/engines/davinci-codex/completions')}`,
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -347,7 +382,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const options = {
 			rejectUnauthorized: rejectUnauthorized,
 			hostname: 'api.openai.com',
-			path: '/v1/engines/davinci-codex/completions',
+			path: `${context.workspaceState.get('@codex.model', '/v1/engines/davinci-codex/completions')}`,
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
